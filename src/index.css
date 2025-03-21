@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+  @layer base {
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  
+    input[type="number"] {
+      -moz-appearance: textfield;
+    }
+  }
+  .spline-canvas canvas {
+    width: 400px !important; /* Default size for larger screens */
+    height: 400px !important;
+  }
+  
+  /* Media query for mobile devices (e.g., screens narrower than 768px) */
+  @media (max-width: 768px) {
+    .spline-canvas canvas {
+      width: 300px !important; /* Adjusted size for mobile */
+      height: 300px !important;
+    }
+  }
+
+  .animate-marquee-down {
+    animation: marqueeDown 10s linear infinite; /* 10s speed, adjustable */
+  }
+  
+  @keyframes marqueeDown {
+    0% {
+      transform: translateY(-100%); /* Start above */
+    }
+    100% {
+      transform: translateY(100%); /* End below */
+    }
+  }
+  
+  /* Optional: Pause on hover */
+  .animate-marquee-down:hover {
+    animation-play-state: paused;
+  }
