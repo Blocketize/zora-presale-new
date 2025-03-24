@@ -125,14 +125,14 @@ export const OverviewSection = () => {
           </h1>
         </div>
 
-        <p className="relative md:w-[571px] w-full md:text-start text-center font-normal text-black text-lg tracking-[-0.54px] leading-normal [font-family:'Century_Gothic-Regular',Helvetica]">
+        <p className="relative md:w-[571px] w-full text-start font-normal text-black text-lg tracking-[-0.54px] leading-normal [font-family:'Century_Gothic-Regular',Helvetica]">
           Create, customize, and evolve your own digital character. <br />
           AI is set to redefine human potential. Join the revolution with Zora!
         </p>
         <div className="w-full absolute flex justify-center sm:right-[-350px] sm:top-[-100px] top-[-50px]">
           <img
             src="zora.png"
-            className="max-sm:w-[250px] max-sm:opacity-40 -z-10 "
+            className="max-sm:w-[250px] max-sm:opacity-20 -z-10 "
           />
         </div>
       </div>

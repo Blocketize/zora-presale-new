@@ -44,3 +44,43 @@
   .animate-marquee-down:hover {
     animation-play-state: paused;
   }
+
+  
+/* Wrapper to hide overflow */
+.marquee-wrapper {
+  height: 500px;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+/* Moving container */
+.marquee {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  animation: verticalScroll 120s linear infinite;
+}
+
+/* Individual items */
+.marquee-item {
+  max-width: max-content;
+  margin: auto;
+  border: 1px solid gray;
+  padding: 15px;
+  border-radius: 50px;
+  text-align: center;
+  background-color: white;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Smooth, infinite scrolling */
+@keyframes verticalScroll {
+  from {
+    transform: translateY(0%);
+  }
+
+  to {
+    transform: translateY(-50%);
+  }
+}

@@ -17,6 +17,7 @@ import { MainContentSection } from "./sections/MainContentSection";
 import { NavigationSection } from "./sections/NavigationSection";
 import { OverviewSection } from "./sections/OverviewSection";
 import { TestimonialsSection } from "./sections/TestimonialsSection";
+import { UnlockSection } from "./sections/UnlockSection";
 import { useState } from "react";
 import PHWallet from "../../components/wallet/wallet";
 import { useRef } from "react";
@@ -141,6 +142,7 @@ export const FrameScreen = () => {
         <div ref={section2Ref} className="w-full">
           <MainContentSection />
         </div>
+        <UnlockSection/>
         <HeroSection />
         <div ref={section3Ref} className="w-full">
           <NavigationSection />
