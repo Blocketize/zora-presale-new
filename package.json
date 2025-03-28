@@ -15,6 +15,7 @@
     "@solana/wallet-adapter-wallets": "^0.19.32",
     "@solana/web3.js": "^1.98.0",
     "@splinetool/react-spline": "^4.0.0",
+    "@splinetool/runtime": "^1.9.82",
     "axios": "^1.8.1",
     "class-variance-authority": "^0.7.1",
     "ethers": "^6.13.5",

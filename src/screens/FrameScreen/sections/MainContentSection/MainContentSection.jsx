@@ -1,27 +1,41 @@
-import React from "react";
+import React, { useState } from "react";
 
 export const MainContentSection = () => {
   const sectionData = {
     title: "The ultimate dapp for digital humans",
     description:
       "Zora is one of the first modular AI Dapps, empowering you to create AI-powered humans that will grow smarter with advancements in artificial intelligence.\n\nWith the Zora Dapp, designing and personalizing your own digital character will be effortless. No programming or coding skills are needed. Our intuitive interface will provide all the tools to lead this revolutionary shift.",
-    images: [
-      {
-        src: "dapp-1-2.png",
-        alt: "Dapp",
-        className: "absolute md:w-[331px] md:h-[630px] w-[239px] h-[454px] top-[30px] md:left-0 left-[-100px] z-[1]",
-      },
-      {
-        src: "dapp-3.png",
-        alt: "Dapp",
-        className: "relative md:w-[362px] w-[261px] h-[497px] md:h-[689px] z-[2]",
-      },
-      {
-        src: "dapp-2.png",
-        alt: "Dapp",
-        className: "absolute md:w-[331px] md:h-[630px] w-[239px] h-[454px] top-[30px] md:left-[459px] max-md:right-[-20px] z-0",
-      },
-    ],
+    // images: [
+    //   {
+    //     src: "dapp-1-2.png",
+    //     alt: "Dapp",
+    //     className: "absolute md:w-[331px] md:h-[630px] w-[239px] h-[454px] top-[30px] md:left-0 left-[-100px] z-[1]",
+    //   },
+    //   {
+    //     src: "dapp-3.png",
+    //     alt: "Dapp",
+    //     className: "relative md:w-[362px] w-[261px] h-[497px] md:h-[689px] z-[2]",
+    //   },
+    //   {
+    //     src: "dapp-2.png",
+    //     alt: "Dapp",
+    //     className: "absolute md:w-[331px] md:h-[630px] w-[239px] h-[454px] top-[30px] md:left-[459px] max-md:right-[-20px] z-0",
+    //   },
+    // ],
+  };
+
+  const [images, setImages] = useState(["dapp-1-2.png", "dapp-3.png", "dapp-2.png"]);
+
+  const handleImageClick = (index) => {
+    if (index === 1) return; 
+
+   
+    const newImages = [...images];
+    if (index === 0) {
+      setImages([images[2], images[0], images[1]]);
+    } else if (index === 2) {
+      setImages([images[1], images[2], images[0]]);
+    }
   };
 
   return (
@@ -32,15 +46,30 @@ export const MainContentSection = () => {
 
       <div className="flex md:flex-row flex-col items-center justify-center gap-[60px] w-full">
         <div className="flex md:w-[790px] w-full items-center justify-center relative">
-          {sectionData.images.map((image, index) => (
-            <React.Fragment key={index}>
-              <img
-                className={`${image.className} object-cover ${index !== 1 && "opacity-40"}`}
-                alt={image.alt}
-                src={image.src}
-              />
-            </React.Fragment>
-          ))}
+          {/* Left Image */}
+          <img
+            src={images[0]}
+            alt="Left"
+            onClick={() => handleImageClick(0)}
+            className="absolute md:w-[331px] md:h-[630px] opacity-40 w-[239px] h-[454px] 
+                   top-[30px] md:left-0 left-[-100px] z-[1] cursor-pointer transition-all duration-500"
+          />
+
+          {/* Center Image */}
+          <img
+            src={images[1]}
+            alt="Center"
+            className="relative md:w-[362px] w-[261px] h-[497px] md:h-[689px] z-[2] transition-all duration-500"
+          />
+
+          {/* Right Image */}
+          <img
+            src={images[2]}
+            alt="Right"
+            onClick={() => handleImageClick(2)}
+            className="absolute md:w-[331px] md:h-[630px] opacity-40 w-[239px] h-[454px] 
+                   top-[30px] md:left-[459px] max-md:right-[-20px] z-0 cursor-pointer transition-all duration-500"
+          />
         </div>
 
         <div className="md:w-[280px] md:text-start text-center w-full text-lg tracking-[-0.54px] [font-family:'Satoshi-Regular',Helvetica] font-normal text-black">
