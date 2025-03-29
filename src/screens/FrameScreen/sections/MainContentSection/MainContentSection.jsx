@@ -49,23 +49,23 @@ export const MainContentSection = () => {
             src={images[0]}
             alt="Left"
             onClick={() => handleImageClick(0)}
-            className="absolute md:w-[331px] md:h-[630px] opacity-40 w-[239px] h-[454px] 
+            className="absolute md:w-[331px] md:h-[630px] opacity-40 w-[209px] h-[394px] 
                    top-[30px] md:left-0 left-[-100px] z-[1] cursor-pointer transition-all duration-500"
           />
           <img
             src={images[1]}
             alt="Center"
-            className="relative md:w-[362px] w-[261px] h-[497px] md:h-[689px] z-[2] transition-all duration-500"
+            className="relative md:w-[362px] w-[231px] h-[437px] md:h-[689px] z-[2] transition-all duration-500"
           />
           <img
             src={images[2]}
             alt="Right"
             onClick={() => handleImageClick(2)}
-            className="absolute md:w-[331px] md:h-[630px] opacity-40 w-[239px] h-[454px] 
+            className="absolute md:w-[331px] md:h-[630px] opacity-40 w-[209px] h-[394px] 
                    top-[30px] md:left-[459px] max-md:right-[-20px] z-0 cursor-pointer transition-all duration-500"
           />
         </div>
-        <div className="md:w-[280px] md:text-start text-center w-full text-lg tracking-[-0.54px] [font-family:'Satoshi-Regular',Helvetica] font-normal text-black">
+        <div className="md:w-[280px] text-start w-full text-lg tracking-[-0.54px] [font-family:'Satoshi-Regular',Helvetica] font-normal text-black">
           {sectionData.description.split("\n\n").map((paragraph, index) => (
             <React.Fragment key={index}>
               {paragraph}

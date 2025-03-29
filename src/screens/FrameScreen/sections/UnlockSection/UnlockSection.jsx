@@ -25,13 +25,13 @@ export const UnlockSection = () => {
     <section className="flex flex-col items-center gap-9 px-6 py-24 md:px-[120px] md:py-[100px] w-full">
       <div className="relative w-full">
         <Card className="flex flex-col justify-center items-center gap-2 md:gap-8 p-6 md:px-[95px] py-[20px] md:py-[50px] rounded-3xl border-2 border-dashed border-[#00000040]">
-          <CardContent className="w-full">
+          <CardContent className="w-full pb-[5px]">
             <p className="font-normal text-black text-[30px] md:text-[48px] text-center tracking-[-0.54px] [font-family:'Satoshi-Regular',Helvetica]">
               {heroTitle}
             </p>
           </CardContent>
           <CardContent className="w-full md:w-[700px]">
-            <p className="font-normal text-black text-[16px] md:text-[24px] text-center tracking-[-0.54px] [font-family:'Satoshi-Regular',Helvetica]">
+            <p className="font-normal text-black text-[16px] md:text-[24px] text-center max-sm:text-left tracking-[-0.54px] [font-family:'Satoshi-Regular',Helvetica]">
               {heroText}
             </p>
           </CardContent>

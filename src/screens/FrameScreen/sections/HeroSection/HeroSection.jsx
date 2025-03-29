@@ -22,7 +22,7 @@ export const HeroSection = () => {
   return (
     <section className="flex flex-col items-center gap-9 px-6 py-24 md:px-[120px] md:py-[100px] w-full">
       <div className="relative w-full">
-        <Card className="flex flex-col justify-center items-center md:flex-row gap-8 md:gap-[131px] p-6 md:px-[95px] md:py-[85px] rounded-3xl border-2 border-dashed border-[#00000040]">
+        <Card className="flex flex-col justify-center items-center md:flex-row gap-8 md:gap-[131px] px-6 py-10 md:px-[95px] md:py-[85px] rounded-3xl border-2 border-dashed border-[#00000040]">
           <CardContent className="p-0 md:w-[280px]">
             <p className="font-normal text-black text-lg tracking-[-0.54px] [font-family:'Satoshi-Regular',Helvetica]">
               {heroText}

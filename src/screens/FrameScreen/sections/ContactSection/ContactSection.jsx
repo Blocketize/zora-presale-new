@@ -104,7 +104,7 @@ export const ContactSection = () => {
       </h2>
 
       <div className="flex flex-col items-center justify-center max-w-[800px] mb-8">
-        <p className="[font-family:'Satoshi-Regular',Helvetica] font-normal text-black text-2xl text-center tracking-[-0.72px]">
+        <p className="[font-family:'Satoshi-Regular',Helvetica] font-normal text-black text-2xl max-sm:text-start text-center tracking-[-0.72px]">
           The roadmap is a key cornerstone that sets successful projects apart
           from those that fall short. To ensure healthy and sustainable growth,
           we've crafted a realistic roadmap with clear, actionable steps

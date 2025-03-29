@@ -16,7 +16,7 @@ export const CallToActionSection = () => {
       <div className="flex flex-col md:flex-row items-center justify-center gap-9 w-full">
         <Card className="border-none shadow-none bg-transparent max-w-[310px]">
           <CardContent className="p-0">
-            <p className="font-normal md:text-lg text-md md:text-start text-center tracking-[-0.54px] [font-family:'Satoshi-Regular',Helvetica]">
+            <p className="font-normal md:text-lg text-md text-start tracking-[-0.54px] [font-family:'Satoshi-Regular',Helvetica]">
               Not only can you create your own digital character, but you'll
               also be able to trade them directly on our platform. The value of
               each one will be determined by its level. The more unique features
