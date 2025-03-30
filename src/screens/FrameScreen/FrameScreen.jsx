@@ -67,9 +67,9 @@ export const FrameScreen = () => {
         <div className="relative w-full flex max-md:border-b-2 max-md:border-black/25 items-center justify-around px-[20px] md:px-[120px] md:py-6 py-3">
           <div className="flex items-center justify-between w-full">
             <img
-              className="md:w-[107.01px] w-[60px] h-8"
+              className="md:w-[120px] w-[90px]"
               alt="Zora"
-              src="zora.svg"
+              src="zora_black_logo.png"
             />
 
             <NavigationMenu>

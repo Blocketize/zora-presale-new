@@ -66,13 +66,6 @@ export const TestimonialsSection = () => {
           <div className="absolute bottom-[-30px] left-0 w-full h-32 bg-white blur-lg z-10 pointer-events-none"></div>
         </div>
       </div>
-
-      {/* <img
-        className="absolute w-screen opacity-30 h-[807px] md:top-[-82px] md:left-0.5 z-[1] object-cover"
-        alt="Abstract"
-        src="abstract1-1.png"
-      /> */}
-
       <button className="inline-flex items-center gap-2 z-0">
         <span className="[font-family:'Satoshi-Bold',Helvetica] font-bold text-black text-2xl tracking-[-0.72px]">
           Read more

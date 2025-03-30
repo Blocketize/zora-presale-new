@@ -44,7 +44,7 @@ export const FeaturesSection = () => {
 
       <div className="flex flex-col md:flex-row items-center justify-center gap-2.5 relative w-full z-[1]">
         <video
-          className="relative w-full md:w-[645.33px] h-auto md:h-[757.3px] object-cover"
+          className="relative w-full md:w-[645.33px] h-auto md:h-[757.3px] object-cover hidden max-sm:block"
           autoPlay
           loop
           muted
@@ -52,7 +52,7 @@ export const FeaturesSection = () => {
         >
           <source src="babygirl.mp4" type="video/mp4" />
         </video>
-
+        <img className="relative w-full md:w-[645.33px] h-auto md:h-[757.3px] object-cover block max-sm:hidden" src="babygirl-1.png"/>
         <div className="flex flex-col items-start gap-3 md:absolute md:top-[235px] md:left-[870px] w-full md:w-auto">
           <Accordion type="single" collapsible className="w-full md:w-[330px]">
             {featureOptions.map((option, index) => (

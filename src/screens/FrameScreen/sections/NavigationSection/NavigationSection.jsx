@@ -9,18 +9,24 @@ export const NavigationSection = () => {
       description:
         "Unleash your vision in minutes! Craft your AI-powered human effortlessly with our intuitive, user-friendly interface. These digital humans will be stored on Solana blockchain for innovation. It's never been simpler or more exciting.",
       isDark: true,
+      img:"Create_Cost_and_Env_02.png",
+      id:1
     },
     {
       title: "Customization",
       description:
         "Shape your digital human to suit your vision. Tweak everything from physical traits like skin, hair, and eyes to deeper aspects like emotions and personality. This is just the start. As AI advances, we'll roll out new features to unlock even greater possibilities.",
       isDark: false,
+      img:"Create_Cost_and_Env_01.png",
+      id:2
     },
     {
       title: "Evolution",
       description:
         "Human intelligence within years. Though limited today, our platform will harness these advancements and enable your digital character to grow smarter over time. Designed to integrate cutting-edge AI technologies, Zora keeps you ahead of the curve.",
       isDark: true,
+      img:"Create_Cost_and_Env_03.png",
+      id:3
     },
   ];
 
@@ -47,15 +53,12 @@ export const NavigationSection = () => {
               card.isDark ? "bg-black text-white" : "bg-white text-black"
             }`}
           >
-            <CardHeader className="p-0">
+            <div className="p-0 relative">
               <div
-                className={`h-[218px] w-full rounded-t-[20px] ${
-                  card.isDark
-                    ? "[background:linear-gradient(180deg,rgb(0,0,0)_0%,rgb(102,102,102)_100%)]"
-                    : "[background:linear-gradient(180deg,rgb(243.54,243.54,243.54)_0%,rgb(102,102,102)_100%)]"
-                }`}
+                className={`h-[218px] w-full rounded-t-[20px]`}
               />
-            </CardHeader>
+              <img src={card.img} className={`rounded-t-[20px] absolute ${card} ${card.id === 1?"top-[-50px] max-sm:left-[-20px]":card.id === 2?"top-[-70px] left-[-60px] w-[500px] ":"sm:top-[-40px] top-[-30px] left-[-80px] sm:left-[-70px] w-[500px] "}`} style={{maxWidth:"10000px"}}/>
+            </div>
             <CardContent className="flex flex-col gap-1 p-3.5">
               <h3
                 className={`[font-family:'Satoshi-Medium',Helvetica] font-medium text-2xl tracking-[-0.72px] ${

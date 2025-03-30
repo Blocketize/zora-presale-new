@@ -30,7 +30,7 @@ export const UnlockSection = () => {
               {heroTitle}
             </p>
           </CardContent>
-          <CardContent className="w-full md:w-[700px]">
+          <CardContent className="w-full p-3 pt-0 md:w-[700px]">
             <p className="font-normal text-black text-[16px] md:text-[24px] text-center max-sm:text-left tracking-[-0.54px] [font-family:'Satoshi-Regular',Helvetica]">
               {heroText}
             </p>

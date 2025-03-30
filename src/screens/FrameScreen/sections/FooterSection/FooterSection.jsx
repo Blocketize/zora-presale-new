@@ -84,7 +84,7 @@ export const FooterSection = () => {
       </div>
 
       <div className="flex items-center justify-between w-full z-[2]">
-        <img className="w-[80.26px] h-6" alt="Zora" src="zora.svg" />
+        <img className="md:w-[120px] w-[90px]" alt="Zora" src="zora_white_logo.png" />
         <div className="[font-family:'Satoshi-Regular',Helvetica] font-normal text-white text-sm text-center tracking-[-0.42px]">
           All Rights Reserved, 2025
         </div>

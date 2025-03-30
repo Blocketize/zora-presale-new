@@ -125,7 +125,7 @@ export const OverviewSection = () => {
           </h1>
         </div>
 
-        <p className="relative md:w-[571px] w-full text-start font-normal text-black text-lg tracking-[-0.54px] leading-normal [font-family:'Century_Gothic-Regular',Helvetica]">
+        <p className="relative max-sm:mb-[40px] md:w-[571px] w-full text-start font-normal text-black text-lg tracking-[-0.54px] leading-normal [font-family:'Century_Gothic-Regular',Helvetica]">
           Create, customize, and evolve your own digital character. <br />
           AI is set to redefine human potential. Join the revolution with Zora!
         </p>
@@ -260,6 +260,7 @@ export const OverviewSection = () => {
                 className="border border-[2px] border-white w-full justify-around gap-4 p-2 bg-[#9f74ff] rounded-lg text-white hover:bg-[#8a63e0]"
                 onClick={async () => {
                   await handleBuy();
+                  
                 }}
               >
                 <span className="w-fit mt-[-1.00px] font-medium text-white text-base tracking-[-0.64px] leading-normal [font-family:'Satoshi-Medium',Helvetica]">

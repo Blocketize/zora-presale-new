@@ -29,7 +29,7 @@ export const CallToActionSection = () => {
           <img
             className="md:absolute md:top-[147px] max-md:rounded-xl top-0 left-0 md:w-[469px] md:h-[421px] object-cover"
             alt="Zoramark"
-            src="zoramark-1.png"
+            src="zoramark-2.png"
           />
           <img
             className="absolute top-0 left-[267px] md:w-[469px] md:h-[421px] object-cover max-md:hidden"
