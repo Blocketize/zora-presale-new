@@ -55,6 +55,10 @@ export const IDL = {
           "type": "u64"
         },
         {
+          "name": "pricePerTokenNext",
+          "type": "u64"
+        },
+        {
           "name": "startTime",
           "type": "u64"
         },
@@ -100,6 +104,10 @@ export const IDL = {
       "args": [
         {
           "name": "pricePerToken",
+          "type": "u64"
+        },
+        {
+          "name": "pricePerTokenNext",
           "type": "u64"
         },
         {
@@ -419,17 +427,17 @@ export const IDL = {
       "name": "claimToken",
       "accounts": [
         {
-          "name": "presaleTokenMintAccount",
+          "name": "mintAccount",
           "isMut": true,
           "isSigner": false
         },
         {
-          "name": "buyerPresaleTokenAssociatedTokenAccount",
+          "name": "buyerTokenAccount",
           "isMut": true,
           "isSigner": false
         },
         {
-          "name": "presalePresaleTokenAssociatedTokenAccount",
+          "name": "presaleTokenAccount",
           "isMut": true,
           "isSigner": false
         },
@@ -445,11 +453,6 @@ export const IDL = {
         },
         {
           "name": "presaleAuthority",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "buyerAuthority",
           "isMut": false,
           "isSigner": false
         },
@@ -738,10 +741,6 @@ export const IDL = {
         "kind": "struct",
         "fields": [
           {
-            "name": "vestingEndTime",
-            "type": "u64"
-          },
-          {
             "name": "hardcapAmount",
             "type": "u128"
           },
@@ -790,10 +789,6 @@ export const IDL = {
             "type": "u64"
           },
           {
-            "name": "isLive",
-            "type": "bool"
-          },
-          {
             "name": "identifier",
             "type": "u8"
           },
@@ -808,6 +803,10 @@ export const IDL = {
           {
             "name": "vault",
             "type": "publicKey"
+          },
+          {
+            "name": "pricePerTokenNext",
+            "type": "u64"
           }
         ]
       }

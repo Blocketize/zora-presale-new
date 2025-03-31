@@ -26,23 +26,16 @@ export default function usePresale() {
     TOKEN_PUBKEY_ADDRESS: process.env.REACT_APP_TOKEN_PUBKEY,
     PRESALE_HARDCAP: process.env.REACT_APP_PRESALE_HARDCAP,
     PRESALE_SOFTCAP: process.env.REACT_APP_PRESALE_SOFTCAP,
-    WHITELIST_PRICE: process.env.REACT_APP_WHITELIST_PRICE,
-    MIN_INVESTMENT: process.env.REACT_APP_MIN_INVESTMENT,
-    MAX_INVESTMENT: process.env.REACT_APP_MAX_INVESTMENT,
     START_DATE_VALUE: process.env.REACT_APP_START_DATE,
-    VESTING_END_DATE: process.env.REACT_APP_VESTING_END_DATE,
     TOKEN_DECIMAL: process.env.REACT_APP_TOKEN_DECIMAL,
     PRESALE_SEED: process.env.REACT_APP_PRESALE_SEED,
-    DEFAULT_SOL_PRICE: process.env.REACT_APP_DEFAULT_SOL_PRICE,
-    NORMAL_PRICE: process.env.REACT_APP_NORMAL_PRICE,
+    CURRENT_PRICE: process.env.REACT_APP_CURRENT_PRICE,
+    NEXT_PRICE:process.env.REACT_APP_NEXT_PRICE,
     END_DATE_VALUE: process.env.REACT_APP_END_DATE,
     VAULT_SEED: process.env.REACT_APP_VAULT_SEED,
     PRESALE_ID: process.env.REACT_APP_PRESALE_ID,
     USER_SEED: process.env.REACT_APP_USER_SEED,
-    CLAIM_DURATION: process.env.REACT_APP_CLAIM_DURATION,
     RPC: process.env.REACT_APP_RPC,
-    GK_API_KEY: process.env.REACT_APP_GK_API_KEY,
-    CLAIM_ALLOW: process.env.REACT_APP_CLAIM_ALLOW,
     USDT_PUBKEY_ADDRESS: process.env.REACT_APP_USDT_PUBKEY,
     USDC_PUBKEY_ADDRESS: process.env.REACT_APP_USDC_PUBKEY,
   };
@@ -54,22 +47,16 @@ export default function usePresale() {
     DEPOSITE_TOKEN_AMOUNT,
     TOKEN_PUBKEY_ADDRESS,
     PRESALE_HARDCAP,
-    WHITELIST_PRICE,
-    MAX_INVESTMENT,
     START_DATE_VALUE,
-    VESTING_END_DATE,
     TOKEN_DECIMAL,
     PRESALE_SEED,
-    DEFAULT_SOL_PRICE,
-    NORMAL_PRICE,
+    CURRENT_PRICE,
+    NEXT_PRICE,
     END_DATE_VALUE,
     VAULT_SEED,
     PRESALE_ID,
     USER_SEED,
-    CLAIM_DURATION,
     RPC,
-    GK_API_KEY,
-    CLAIM_ALLOW,
     USDT_PUBKEY_ADDRESS,
     USDC_PUBKEY_ADDRESS,
   } = config;
@@ -93,6 +80,8 @@ export default function usePresale() {
   const [startTime, setStartTime] = useState(0);
   const [endTime, setEndTime] = useState(0);
   const [buyAmount, setBuyAmount] = useState(0);
+  const [currentPrice, setCurrentPrice] = useState(0);
+  const [nextPrice, setNextPrice] = useState(0);
   const [claimedAmount, setClaimedAmount] = useState(0);
   const [totalBuyAmount, setTotalBuyAmount] = useState(0);
   const [claimableAmount, setClaimableAmount] = useState(0);
@@ -100,7 +89,6 @@ export default function usePresale() {
   const [totalAmount, setTotalAmount] = useState(0);
   const [vaultAddress, setVaultAddress] = useState("");
   const [claimTime, setClaimTime] = useState(0);
-  const [defaultPrice, setDefaultPrice] = useState(WHITELIST_PRICE);
   const [tokenBalance, setTokenBalance] = useState(0);
 
   const program = useMemo(() => {
@@ -141,6 +129,8 @@ export default function usePresale() {
             Number(info.soldTokenAmount.toString()) /
               10 ** Number(TOKEN_DECIMAL)
           );
+          setCurrentPrice(Number(info.pricePerToken) / LAMPORTS_PER_SOL);
+          setNextPrice(Number(info.pricePerTokenNext) / LAMPORTS_PER_SOL);
 
           console.log("test",Number(info.solAmount),Number(info.startTime),Number(info.endTime),Number(info.soldTokenAmount.toString()), Number(info.totalAmount.toString()))
         } catch (error) {
@@ -167,6 +157,7 @@ export default function usePresale() {
           );
           setBuyAmount(info.buyTokenAmount);
           setClaimedAmount(info.claimAmount);
+          console.log("claim",Number(info.buyTokenAmount))
         } catch (error) {
           setClaimableAmount(0);
           console.log(error);
@@ -216,6 +207,8 @@ export default function usePresale() {
             Number(info.soldTokenAmount.toString()) /
               10 ** Number(TOKEN_DECIMAL)
           );
+          setCurrentPrice(Number(info.pricePerToken) / LAMPORTS_PER_SOL);
+          setNextPrice(Number(info.pricePerTokenNext) / LAMPORTS_PER_SOL);
 
           console.log("test",Number(info.solAmount),Number(info.startTime),Number(info.endTime),Number(info.soldTokenAmount.toString()), Number(info.totalAmount.toString()))
         } catch (error) {
@@ -246,12 +239,14 @@ export default function usePresale() {
           [Buffer.from(VAULT_SEED), presale_info.toBuffer()],
           program.programId
         );
-        const tokenPrice = Number(NORMAL_PRICE) * 10 ** 9;
+        const tokenPrice = Number(CURRENT_PRICE) * 10 ** 9;
+        const tokenNextPrice = Number(NEXT_PRICE) * 10**9;
 
         const hardCap = new anchor.BN(
           LAMPORTS_PER_SOL * Number(PRESALE_HARDCAP)
         );
         const price = new anchor.BN(tokenPrice);
+        const priceNext = new anchor.BN(tokenNextPrice);
         const sTime = new anchor.BN(START_DATE.getTime() / 1000);
         const eTime = new anchor.BN(END_DATE.getTime() / 1000);
         if (!publicKey || !wallet) {
@@ -262,6 +257,7 @@ export default function usePresale() {
           .createPresale(
             hardCap,
             price,
+            priceNext,
             sTime,
             eTime,
             new anchor.BN(Number(PRESALE_ID))
@@ -275,7 +271,7 @@ export default function usePresale() {
             systemProgram: SystemProgram.programId,
           })
           .rpc();
-
+          toast.success("You created presale ownership successfully")
         return false;
       } catch (error) {
         console.error(error);
@@ -286,8 +282,7 @@ export default function usePresale() {
     }
     return false;
   };
-
-  const updatePresale = async () => {
+  const updatePresale = async (priceNext) => {
     if (program && publicKey) {
       try {
         console.log("update presale");
@@ -300,22 +295,21 @@ export default function usePresale() {
           ],
           program.programId
         );
-        const tokenPrice = Number(NORMAL_PRICE) * 10 ** 9;
+        const tokenPriceNext = Number(priceNext) * 10 ** 9;
 
         const hardCap = new anchor.BN(
           LAMPORTS_PER_SOL * Number(PRESALE_HARDCAP)
         );
-        const max = new anchor.BN(LAMPORTS_PER_SOL * Number(MAX_INVESTMENT));
-        const price = new anchor.BN(tokenPrice);
         const sTime = new anchor.BN(START_DATE.getTime() / 1000);
         const eTime = new anchor.BN(END_DATE.getTime() / 1000);
-        const veTime = new anchor.BN(
-          new Date(VESTING_END_DATE).getTime() / 1000
-        );
+        const info = await program.account.presaleInfo.fetch(presale_info);
+        const price = info.pricePerTokenNext;
+        const priceForNext = new anchor.BN(tokenPriceNext);
 
         await program.methods
           .updatePresale(
             price,
+            priceForNext,
             hardCap,
             sTime,
             eTime,
@@ -329,7 +323,7 @@ export default function usePresale() {
             systemProgram: SystemProgram.programId,
           })
           .rpc();
-
+        toast.success("You changed price successfully!");
         return false;
       } catch (error) {
         console.error(error);
@@ -341,7 +335,6 @@ export default function usePresale() {
     }
     return false;
   };
-
   const buySol = async (solAmount) => {
     if (program && publicKey) {
       try {
@@ -421,7 +414,6 @@ export default function usePresale() {
       return false;
     }
   };
-
   const buyUsdt = async (tokenAmount) => {
     if (program && publicKey) {
       try {
@@ -494,7 +486,6 @@ export default function usePresale() {
       return false;
     }
   };
-
   const buyUsdc = async (tokenAmount) => {
     if (program && publicKey) {
       try {
@@ -567,13 +558,7 @@ export default function usePresale() {
       return false;
     }
   };
-
   const claimToken = async () => {
-    if (Number(CLAIM_ALLOW) === 0) {
-      toast.error("Please wait until presale finishes!");
-      return false;
-    }
-
     if (program && publicKey) {
       try {
         setTransactionPending(true);
@@ -594,14 +579,14 @@ export default function usePresale() {
           ],
           program.programId
         );
-
-        const buyerPresaleTokenAssociatedTokenAccount =
+        console.log("userInfo", userInfo.toBase58())
+        const buyerTokenAccount =
           await anchor.utils.token.associatedAddress({
             mint: TOKEN_PUBKEY,
             owner: publicKey,
           });
 
-        const presalePresaleTokenAssociatedTokenAccount =
+        const presaleTokenAccount =
           await anchor.utils.token.associatedAddress({
             mint: TOKEN_PUBKEY,
             owner: presaleInfo,
@@ -610,9 +595,9 @@ export default function usePresale() {
         await program.methods
           .claimToken(Number(PRESALE_ID))
           .accounts({
-            presaleTokenMintAccount: TOKEN_PUBKEY,
-            buyerPresaleTokenAssociatedTokenAccount,
-            presalePresaleTokenAssociatedTokenAccount,
+            mintAccount: TOKEN_PUBKEY,
+            buyerTokenAccount:buyerTokenAccount,
+            presaleTokenAccount:presaleTokenAccount,
             userInfo,
             presaleInfo,
             presaleAuthority: PRESALE_AUTHORITY,
@@ -628,6 +613,7 @@ export default function usePresale() {
         toast.success("Token claim was successful.");
         return false;
       } catch (error) {
+        console.error(error);
         toast.error(error.toString());
         return false;
       } finally {
@@ -636,27 +622,6 @@ export default function usePresale() {
     }
     return false;
   };
-
-  const getSolPrice = async () => {
-    try {
-      const response = await fetch(
-        "https://pro-api.coingecko.com/api/v3/simple/price?ids=solana&vs_currencies=usd",
-        {
-          method: "GET",
-          headers: {
-            "x-cg-pro-api-key": GK_API_KEY,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      const data = await response.json();
-      const solPrice = data.solana.usd;
-      return solPrice || Number(DEFAULT_SOL_PRICE);
-    } catch (error) {
-      return Number(DEFAULT_SOL_PRICE);
-    }
-  };
-
   const withdrawSol = async () => {
     if (program && publicKey) {
       try {
@@ -691,6 +656,7 @@ export default function usePresale() {
         toast.success("Successfully withdrew SOL.");
         return false;
       } catch (error) {
+        console.error(error);
         toast.error(error.toString());
         return false;
       } finally {
@@ -699,7 +665,116 @@ export default function usePresale() {
     }
     return false;
   };
+  const withdrawUsdt = async () => {
+    if (program && publicKey) {
+      try {
+        setTransactionPending(true);
+        const [presale_info] = findProgramAddressSync(
+          [
+            utf8.encode(PRESALE_SEED),
+            PRESALE_AUTHORITY.toBuffer(),
+            new Uint8Array([Number(PRESALE_ID)]),
+          ],
+          program.programId
+        );
+        const [vault] = await PublicKey.findProgramAddress(
+          [Buffer.from(VAULT_SEED), presale_info.toBuffer()],
+          program.programId
+        );
+        const usdtAssociatedTokenAccount =
+          await anchor.utils.token.associatedAddress({
+            mint: USDT_PUBKEY,
+            owner: publicKey,
+          });
+          const usdtVault = await anchor.utils.token.associatedAddress({
+            mint: USDT_PUBKEY,
+            owner: vault,
+          });
 
+        await program.methods
+          .withdrawUsdt(Number(PRESALE_ID))
+          .accounts({
+            presaleInfo: presale_info,
+            usdtMint:USDT_PUBKEY,
+            vault: vault,
+            usdtAssociatedTokenAccount:usdtAssociatedTokenAccount,
+            usdtVault:usdtVault,
+            presaleAuthority: PRESALE_AUTHORITY,
+            buyer: publicKey,
+            rent: anchor.web3.SYSVAR_RENT_PUBKEY,
+            systemProgram: anchor.web3.SystemProgram.programId,
+            tokenProgram: anchor.utils.token.TOKEN_PROGRAM_ID,
+            associatedTokenProgram: ASSOCIATED_PROGRAM_ID,
+          })
+          .rpc();
+
+        toast.success("Successfully withdraw USDT.");
+        return false;
+      } catch (error) {
+        console.error(error);
+        toast.error(error.toString());
+        return false;
+      } finally {
+        setTransactionPending(false);
+      }
+    }
+    return false;
+  };
+  const withdrawUsdc = async () => {
+    if (program && publicKey) {
+      try {
+        setTransactionPending(true);
+        const [presale_info] = findProgramAddressSync(
+          [
+            utf8.encode(PRESALE_SEED),
+            PRESALE_AUTHORITY.toBuffer(),
+            new Uint8Array([Number(PRESALE_ID)]),
+          ],
+          program.programId
+        );
+        const [vault] = await PublicKey.findProgramAddress(
+          [Buffer.from(VAULT_SEED), presale_info.toBuffer()],
+          program.programId
+        );
+        const usdcAssociatedTokenAccount =
+          await anchor.utils.token.associatedAddress({
+            mint: USDC_PUBKEY,
+            owner: publicKey,
+          });
+          const usdcVault = await anchor.utils.token.associatedAddress({
+            mint: USDC_PUBKEY,
+            owner: vault,
+          });
+
+        await program.methods
+          .withdrawUsdc(Number(PRESALE_ID))
+          .accounts({
+            presaleInfo: presale_info,
+            usdcMint:USDC_PUBKEY,
+            vault: vault,
+            usdcAssociatedTokenAccount:usdcAssociatedTokenAccount,
+            usdcVault:usdcVault,
+            presaleAuthority: PRESALE_AUTHORITY,
+            buyer: publicKey,
+            rent: anchor.web3.SYSVAR_RENT_PUBKEY,
+            systemProgram: anchor.web3.SystemProgram.programId,
+            tokenProgram: anchor.utils.token.TOKEN_PROGRAM_ID,
+            associatedTokenProgram: ASSOCIATED_PROGRAM_ID,
+          })
+          .rpc();
+
+        toast.success("Successfully withdraw USDC.");
+        return false;
+      } catch (error) {
+        console.error(error);
+        toast.error(error.toString());
+        return false;
+      } finally {
+        setTransactionPending(false);
+      }
+    }
+    return false;
+  };
   const depositToken = async () => {
     if (program && publicKey) {
       try {
@@ -755,20 +830,22 @@ export default function usePresale() {
     }
     return false;
   };
-
   return {
     buyUsdt,
     buyUsdc,
     buySol,
     claimToken,
-    getSolPrice,
     createPresale,
     updatePresale,
     depositToken,
     withdrawSol,
+    withdrawUsdt,
+    withdrawUsdc,
     totalAmount,
     startTime,
     endTime,
+    currentPrice,
+    nextPrice,
     buyAmount,
     claimedAmount,
     totalBuyAmount,
@@ -776,7 +853,6 @@ export default function usePresale() {
     claimableAmount,
     solAmount,
     vaultAddress,
-    defaultPrice,
     PRESALE_AUTHORITY,
     tokenBalance,
   };

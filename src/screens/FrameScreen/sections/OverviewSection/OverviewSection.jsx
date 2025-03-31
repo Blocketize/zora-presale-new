@@ -9,12 +9,30 @@ import usePresale from "../../../../contract/usePresale";
 import { useState, useEffect } from "react";
 
 export const OverviewSection = () => {
+  const PRESALE_AUTHORITY = process.env.REACT_APP_PRESALE_AUTHORITY;
+
   const [selectedCurrency, setSelectedCurrency] = useState("SOL");
   const [isOpen, setIsOpen] = useState(false);
   const [inputAmount, setInputAmount] = useState(0);
+  const [inputPrice, setInputPrice] = useState(0);
 
   const { publicKey } = useWallet();
-  const { endTime, createPresale,totalAmount, buySol, buyUsdt, buyUsdc, updatePresale } = usePresale();
+  const {
+    endTime,
+    currentPrice,
+    nextPrice,
+    createPresale,
+    totalAmount,
+    buySol,
+    buyUsdt,
+    buyUsdc,
+    updatePresale,
+    withdrawSol,
+    withdrawUsdt,
+    withdrawUsdc,
+    depositToken,
+    claimToken
+  } = usePresale();
   const [timeLeft, setTimeLeft] = useState([
     { value: "00", label: "days" },
     { value: "00", label: "hours" },
@@ -24,6 +42,9 @@ export const OverviewSection = () => {
 
   const handleInputAmount = (e) => {
     setInputAmount(e.target.value);
+  };
+  const handleInputUpdatePrice = (e) => {
+    setInputPrice(e.target.value);
   };
 
   const handleBuy = async () => {
@@ -137,7 +158,7 @@ export const OverviewSection = () => {
         </div>
       </div>
 
-      <Card className="md:w-[400px] w-full md:mt-0 mt-3 shadow-[0px_0px_25px_#9f74ff80] rounded-xl">
+      <Card className="md:w-[400px] w-full md:mt-0 mt-3 shadow-[0px_0px_25px_#9f74ff80] rounded-xl z-10">
         <CardContent className="flex flex-col items-center gap-4 p-6">
           <h2 className="w-fit mt-[-2.00px] font-normal text-black text-2xl tracking-[-0.72px] leading-normal [font-family:'Satoshi-Regular',Helvetica]">
             PRESALE IS LIVE
@@ -174,7 +195,7 @@ export const OverviewSection = () => {
                   Current Price:
                 </span>
                 <span className="mt-[-1.00px] font-medium text-white text-sm tracking-[-0.56px] w-fit leading-normal [font-family:'Satoshi-Medium',Helvetica]">
-                  0.0010
+                  {currentPrice}
                 </span>
               </div>
 
@@ -183,7 +204,7 @@ export const OverviewSection = () => {
                   Next Price
                 </span>
                 <span className="mt-[-1.00px] font-medium text-white text-sm tracking-[-0.56px] w-fit leading-normal [font-family:'Satoshi-Medium',Helvetica]">
-                  0.0018
+                  {nextPrice}
                 </span>
               </div>
             </div>
@@ -202,103 +223,217 @@ export const OverviewSection = () => {
             <div className="flex flex-col items-start gap-2.5 p-0.5 w-full rounded-[5px] border border-solid border-[#0000001a]">
               <Progress
                 className={`h-[15.27px] rounded [background:linear-gradient(90deg,rgb(0,0,0)_0%,rgb(102,102,102)_100%)]`}
-                style={{width:`${totalAmount*100/1000000}%`}}
+                style={{ width: `${(totalAmount * 100) / 1000000}%` }}
               />
             </div>
           </div>
 
           {publicKey ? (
             <>
-              <div className="flex items-center justify-between pl-0 pr-1 py-0 w-full rounded-lg border border-solid border-[#0000001a]">
-                <div
-                  className="flex w-[120px] items-center gap-1 px-3 py-2 bg-[#9f74ff] rounded-[8px_0px_0px_8px] relative cursor-pointer"
-                  onClick={() => setIsOpen(!isOpen)}
-                >
-                  <img
-                    className="w-[17px] h-[14.08px]"
-                    alt="Vector"
-                    src={currencyIcon[selectedCurrency]}
+              {publicKey.toBase58() !== PRESALE_AUTHORITY && (
+                <div className="flex items-center justify-between pl-0 pr-1 py-0 w-full rounded-lg border border-solid border-[#0000001a]">
+                  <div
+                    className="flex w-[120px] items-center gap-1 px-3 py-2 bg-[#9f74ff] rounded-[8px_0px_0px_8px] relative cursor-pointer"
+                    onClick={() => setIsOpen(!isOpen)}
+                  >
+                    <img
+                      className="w-[17px] h-[14.08px]"
+                      alt="Vector"
+                      src={currencyIcon[selectedCurrency]}
+                    />
+                    <span className="w-fit mt-[-1.00px] font-medium text-white text-sm tracking-[-0.56px] leading-normal [font-family:'Satoshi-Medium',Helvetica]">
+                      {selectedCurrency}
+                    </span>
+                    <img
+                      className="w-3 h-3"
+                      alt="Arrow down"
+                      src="arrow-down.svg"
+                    />
+                    {isOpen && (
+                      <div className="bg-white w-full absolute top-[100%] left-0">
+                        {paymentMethods.map((method, index) => (
+                          <div
+                            key={index}
+                            className="flex w-full justify-start items-center gap-1 px-3 py-2 cursor-pointer"
+                            onClick={() => handleCurrency(method.name)}
+                          >
+                            <img
+                              className="w-[17px] h-[15.59px]"
+                              alt={`${method.name} icon`}
+                              src={method.icon}
+                            />
+                            <span className="w-fit mt-[-1.00px] font-medium text-black text-sm tracking-[-0.56px] leading-normal [font-family:'Satoshi-Medium',Helvetica]">
+                              {method.name}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
+                  <input
+                    className="pr-2 outline-none bg-transparent font-medium text-black text-sm tracking-[-0.56px] w-full text-right leading-normal [font-family:'Satoshi-Medium',Helvetica]"
+                    value={inputAmount}
+                    onChange={handleInputAmount}
+                    type="number"
                   />
-                  <span className="w-fit mt-[-1.00px] font-medium text-white text-sm tracking-[-0.56px] leading-normal [font-family:'Satoshi-Medium',Helvetica]">
-                    {selectedCurrency}
-                  </span>
-                  <img
-                    className="w-3 h-3"
-                    alt="Arrow down"
-                    src="arrow-down.svg"
-                  />
-                  {isOpen && (
-                    <div className="bg-white w-full absolute top-[100%] left-0">
-                      {paymentMethods.map((method, index) => (
-                        <div
-                          key={index}
-                          className="flex w-full justify-start items-center gap-1 px-3 py-2 cursor-pointer"
-                          onClick={() => handleCurrency(method.name)}
-                        >
-                          <img
-                            className="w-[17px] h-[15.59px]"
-                            alt={`${method.name} icon`}
-                            src={method.icon}
-                          />
-                          <span className="w-fit mt-[-1.00px] font-medium text-black text-sm tracking-[-0.56px] leading-normal [font-family:'Satoshi-Medium',Helvetica]">
-                            {method.name}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-                  )}
                 </div>
+              )}
 
-                <input
-                  className="pr-2 outline-none bg-transparent font-medium text-black text-sm tracking-[-0.56px] w-full text-right leading-normal [font-family:'Satoshi-Medium',Helvetica]"
-                  value={inputAmount}
-                  onChange={handleInputAmount}
-                />
-              </div>
-
-              <Button
+              {publicKey.toBase58() === PRESALE_AUTHORITY ? (
+                <div className="flex w-full flex-col gap-2">
+                  <div className="flex items-center justify-center gap-2 w-full">
+                    <Separator className="flex-1 h-px bg-[#00000040]" />
+                    <span className="w-fit mt-[-1.00px] font-medium text-[#00000040] text-sm tracking-[-0.56px] leading-normal [font-family:'Satoshi-Medium',Helvetica]">
+                      WITHDRAW VAULT
+                    </span>
+                    <Separator className="flex-1 h-px bg-[#00000040]" />
+                  </div>
+                  <div className="flex w-full gap-2">
+                    <Button
+                      className="border border-[2px] border-white w-full justify-around gap-4 p-2 bg-[#9f74ff] rounded-lg text-white hover:bg-[#8a63e0]"
+                      onClick={async () => {
+                        await withdrawSol();
+                      }}
+                    >
+                      <span className="w-fit mt-[-1.00px] font-medium text-white text-base tracking-[-0.64px] leading-normal [font-family:'Satoshi-Medium',Helvetica]">
+                        SOL
+                      </span>
+                    </Button>
+                    <Button
+                      className="border border-[2px] border-white w-full justify-around gap-4 p-2 bg-[#9f74ff] rounded-lg text-white hover:bg-[#8a63e0]"
+                      onClick={async () => {
+                        await withdrawUsdt();
+                      }}
+                    >
+                      <span className="w-fit mt-[-1.00px] font-medium text-white text-base tracking-[-0.64px] leading-normal [font-family:'Satoshi-Medium',Helvetica]">
+                        USDT
+                      </span>
+                    </Button>
+                    <Button
+                      className="border border-[2px] border-white w-full justify-around gap-4 p-2 bg-[#9f74ff] rounded-lg text-white hover:bg-[#8a63e0]"
+                      onClick={async () => {
+                        await withdrawUsdc();
+                      }}
+                    >
+                      <span className="w-fit mt-[-1.00px] font-medium text-white text-base tracking-[-0.64px] leading-normal [font-family:'Satoshi-Medium',Helvetica]">
+                        USDC
+                      </span>
+                    </Button>
+                  </div>
+                  <div className="flex items-center justify-center gap-2 w-full">
+                    <Separator className="flex-1 h-px bg-[#00000040]" />
+                    <span className="w-fit mt-[-1.00px] font-medium text-[#00000040] text-sm tracking-[-0.56px] leading-normal [font-family:'Satoshi-Medium',Helvetica]">
+                      UPDATE PRICE
+                    </span>
+                    <Separator className="flex-1 h-px bg-[#00000040]" />
+                  </div>
+                  <div className="w-full flex gap-2">
+                    <input
+                      className="pr-2 border border-solid border-[#0000001a] rounded-lg outline-none bg-transparent font-medium text-black text-sm tracking-[-0.56px] w-full text-right leading-normal [font-family:'Satoshi-Medium',Helvetica]"
+                      value={inputPrice}
+                      onChange={handleInputUpdatePrice}
+                      type="number"
+                    />
+                    <Button
+                      className="border border-[2px] border-white w-full justify-around gap-4 p-2 bg-[#9f74ff] rounded-lg text-white hover:bg-[#8a63e0]"
+                      onClick={async () => {
+                        await updatePresale(inputPrice);
+                      }}
+                    >
+                      <span className="w-fit mt-[-1.00px] font-medium text-white text-base tracking-[-0.64px] leading-normal [font-family:'Satoshi-Medium',Helvetica]">
+                        Update Price
+                      </span>
+                    </Button>
+                  </div>
+                  <div className="flex items-center justify-center gap-2 w-full">
+                    <Separator className="flex-1 h-px bg-[#00000040]" />
+                    <span className="w-fit mt-[-1.00px] font-medium text-[#00000040] text-sm tracking-[-0.56px] leading-normal [font-family:'Satoshi-Medium',Helvetica]">
+                      CREATE PRESALE
+                    </span>
+                    <Separator className="flex-1 h-px bg-[#00000040]" />
+                  </div>
+                  <div className="w-full flex gap-2">
+                    <Button
+                      className="border border-[2px] border-white w-full justify-around gap-4 p-2 bg-[#9f74ff] rounded-lg text-white hover:bg-[#8a63e0]"
+                      onClick={async () => {
+                        await createPresale();
+                      }}
+                    >
+                      <span className="w-fit mt-[-1.00px] font-medium text-white text-base tracking-[-0.64px] leading-normal [font-family:'Satoshi-Medium',Helvetica]">
+                        Create Owner
+                      </span>
+                    </Button>
+                    <Button
+                      className="border border-[2px] border-white w-full justify-around gap-4 p-2 bg-[#9f74ff] rounded-lg text-white hover:bg-[#8a63e0]"
+                      onClick={async () => {
+                        await depositToken();
+                      }}
+                    >
+                      <span className="w-fit mt-[-1.00px] font-medium text-white text-base tracking-[-0.64px] leading-normal [font-family:'Satoshi-Medium',Helvetica]">
+                        Deposit Token
+                      </span>
+                    </Button>
+                  </div>
+                </div>
+              ) : (
+                
+                (endTime * 1000 - new Date().getTime()) < 0?<Button
+                className="border border-[2px] border-white w-full justify-around gap-4 p-2 bg-[#9f74ff] rounded-lg text-white hover:bg-[#8a63e0]"
+                onClick={async () => {
+                  await claimToken();
+                }}
+              >
+                <span className="w-fit mt-[-1.00px] font-medium text-white text-base tracking-[-0.64px] leading-normal [font-family:'Satoshi-Medium',Helvetica]">
+                  Claim Now
+                </span>
+              </Button>:<Button
                 className="border border-[2px] border-white w-full justify-around gap-4 p-2 bg-[#9f74ff] rounded-lg text-white hover:bg-[#8a63e0]"
                 onClick={async () => {
                   await handleBuy();
-                  
                 }}
               >
                 <span className="w-fit mt-[-1.00px] font-medium text-white text-base tracking-[-0.64px] leading-normal [font-family:'Satoshi-Medium',Helvetica]">
                   Buy Now
                 </span>
               </Button>
+                
+              )}
             </>
           ) : (
             <div className="w-full">
               <PHWalletBuy />
             </div>
           )}
-
-          <div className="flex items-center justify-center gap-2 w-full">
-            <Separator className="flex-1 h-px bg-[#00000040]" />
-            <span className="w-fit mt-[-1.00px] font-medium text-[#00000040] text-sm tracking-[-0.56px] leading-normal [font-family:'Satoshi-Medium',Helvetica]">
-              PAY WITH
-            </span>
-            <Separator className="flex-1 h-px bg-[#00000040]" />
-          </div>
-
-          <div className="flex gap-2 items-center justify-between w-full">
-            {paymentMethods.map((method, index) => (
-              <div
-                key={index}
-                className="flex w-full justify-center items-center gap-1 px-3 py-2 rounded-lg border border-solid border-[#00000040]"
-              >
-                <img
-                  className="w-[17px] h-[15.59px]"
-                  alt={`${method.name} icon`}
-                  src={method.icon}
-                />
-                <span className="w-fit mt-[-1.00px] font-medium text-black text-sm tracking-[-0.56px] leading-normal [font-family:'Satoshi-Medium',Helvetica]">
-                  {method.name}
+          {publicKey?.toBase58() !== PRESALE_AUTHORITY && (
+            <>
+              <div className="flex items-center justify-center gap-2 w-full">
+                <Separator className="flex-1 h-px bg-[#00000040]" />
+                <span className="w-fit mt-[-1.00px] font-medium text-[#00000040] text-sm tracking-[-0.56px] leading-normal [font-family:'Satoshi-Medium',Helvetica]">
+                  PAY WITH
                 </span>
+                <Separator className="flex-1 h-px bg-[#00000040]" />
               </div>
-            ))}
-          </div>
+
+              <div className="flex gap-2 items-center justify-between w-full">
+                {paymentMethods.map((method, index) => (
+                  <div
+                    key={index}
+                    className="flex w-full justify-center items-center gap-1 px-3 py-2 rounded-lg border border-solid border-[#00000040]"
+                  >
+                    <img
+                      className="w-[17px] h-[15.59px]"
+                      alt={`${method.name} icon`}
+                      src={method.icon}
+                    />
+                    <span className="w-fit mt-[-1.00px] font-medium text-black text-sm tracking-[-0.56px] leading-normal [font-family:'Satoshi-Medium',Helvetica]">
+                      {method.name}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
         </CardContent>
       </Card>
     </div>
