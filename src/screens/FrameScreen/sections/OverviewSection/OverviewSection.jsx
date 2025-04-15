@@ -27,6 +27,7 @@ export const OverviewSection = () => {
     buyUsdt,
     buyUsdc,
     updatePresale,
+    increaseDate,
     withdrawSol,
     withdrawUsdt,
     withdrawUsdc,
@@ -324,7 +325,7 @@ export const OverviewSection = () => {
                   <div className="flex items-center justify-center gap-2 w-full">
                     <Separator className="flex-1 h-px bg-[#00000040]" />
                     <span className="w-fit mt-[-1.00px] font-medium text-[#00000040] text-sm tracking-[-0.56px] leading-normal [font-family:'Satoshi-Medium',Helvetica]">
-                      UPDATE PRICE
+                      UPDATE
                     </span>
                     <Separator className="flex-1 h-px bg-[#00000040]" />
                   </div>
@@ -346,6 +347,16 @@ export const OverviewSection = () => {
                       </span>
                     </Button>
                   </div>
+                  <Button
+                      className="border border-[2px] border-white w-full justify-around gap-4 p-2 bg-[#9f74ff] rounded-lg text-white hover:bg-[#8a63e0]"
+                      onClick={async () => {
+                        await increaseDate();
+                      }}
+                    >
+                      <span className="w-fit mt-[-1.00px] font-medium text-white text-base tracking-[-0.64px] leading-normal [font-family:'Satoshi-Medium',Helvetica]">
+                        Increase Date
+                      </span>
+                    </Button>
                   <div className="flex items-center justify-center gap-2 w-full">
                     <Separator className="flex-1 h-px bg-[#00000040]" />
                     <span className="w-fit mt-[-1.00px] font-medium text-[#00000040] text-sm tracking-[-0.56px] leading-normal [font-family:'Satoshi-Medium',Helvetica]">
@@ -390,7 +401,7 @@ export const OverviewSection = () => {
               </Button>:<Button
                 className="border border-[2px] border-white w-full justify-around gap-4 p-2 bg-[#9f74ff] rounded-lg text-white hover:bg-[#8a63e0]"
                 onClick={async () => {
-                  await handleBuy();
+                  await increaseDate();
                 }}
               >
                 <span className="w-fit mt-[-1.00px] font-medium text-white text-base tracking-[-0.64px] leading-normal [font-family:'Satoshi-Medium',Helvetica]">

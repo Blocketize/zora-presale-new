@@ -335,6 +335,57 @@ export default function usePresale() {
     }
     return false;
   };
+  const increaseDate = async () => {
+    if (program && publicKey) {
+      try {
+        console.log("update presale");
+        setTransactionPending(true);
+        const [presale_info] = await PublicKey.findProgramAddress(
+          [
+            Buffer.from(PRESALE_SEED),
+            PRESALE_AUTHORITY.toBuffer(),
+            new Uint8Array([Number(PRESALE_ID)]),
+          ],
+          program.programId
+        );
+
+        const hardCap = new anchor.BN(
+          LAMPORTS_PER_SOL * Number(PRESALE_HARDCAP)
+        );
+        const sTime = new anchor.BN(START_DATE.getTime() / 1000);
+        const info = await program.account.presaleInfo.fetch(presale_info);
+        const price = info.pricePerToken;
+        const priceForNext = info.pricePerTokenNext;
+        const eTime = new anchor.BN(Number(Number((new Date().getTime())/1000).toFixed()) + 1306000);
+        await program.methods
+          .updatePresale(
+            price,
+            priceForNext,
+            hardCap,
+            sTime,
+            eTime,
+            new anchor.BN(Number(PRESALE_ID))
+          )
+          .accounts({
+            presaleInfo: presale_info,
+            usdtMint: USDT_PUBKEY,
+            usdcMint: USDC_PUBKEY,
+            authority: PRESALE_AUTHORITY,
+            systemProgram: SystemProgram.programId,
+          })
+          .rpc();
+        toast.success("You increased end date successfully!");
+        return false;
+      } catch (error) {
+        console.error(error);
+        toast.error(error.toString());
+        return false;
+      } finally {
+        setTransactionPending(false);
+      }
+    }
+    return false;
+  };
   const buySol = async (solAmount) => {
     if (program && publicKey) {
       try {
@@ -841,6 +892,7 @@ export default function usePresale() {
     withdrawSol,
     withdrawUsdt,
     withdrawUsdc,
+    increaseDate,
     totalAmount,
     startTime,
     endTime,
