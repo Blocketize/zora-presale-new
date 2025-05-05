@@ -6,8 +6,10 @@ import {
 } from "../../../../components/ui/accordion";
 import { Button } from "../../../../components/ui/button";
 import { Card } from "../../../../components/ui/card";
+import usePresale from "../../../../contract/usePresale";
+import { useState, useEffect } from "react";
 
-export const FeaturesSection = () => {
+export const FeaturesSection = ({scrollToSection}) => {
   const featureOptions = [
     {
       id: "virtual-assistant",
@@ -28,7 +30,62 @@ export const FeaturesSection = () => {
         "AI will play a pivotal role in shaping our future, and Zora is set to be at the forefront.",
     },
   ];
+    const {
+      endTime
+    } = usePresale();
 
+  const [timeLeft, setTimeLeft] = useState([
+      { value: "00", label: "days" },
+      { value: "00", label: "hours" },
+      { value: "00", label: "mins" },
+      { value: "00", label: "secs" },
+    ]);
+     useEffect(() => {
+        const interval = setInterval(() => {
+          const now = new Date().getTime();
+          const distance = endTime * 1000 - now;
+          if (distance <= 0) {
+            clearInterval(interval);
+            setTimeLeft([
+              { value: "00", label: "days" },
+              { value: "00", label: "hours" },
+              { value: "00", label: "mins" },
+              { value: "00", label: "secs" },
+            ]);
+          } else {
+            setTimeLeft([
+              {
+                value: Math.floor(distance / (1000 * 60 * 60 * 24))
+                  .toString()
+                  .padStart(2, "0"),
+                label: "days",
+              },
+              {
+                value: Math.floor(
+                  (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+                )
+                  .toString()
+                  .padStart(2, "0"),
+                label: "hours",
+              },
+              {
+                value: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))
+                  .toString()
+                  .padStart(2, "0"),
+                label: "mins",
+              },
+              {
+                value: Math.floor((distance % (1000 * 60)) / 1000)
+                  .toString()
+                  .padStart(2, "0"),
+                label: "secs",
+              },
+            ]);
+          }
+        }, 1000);
+    
+        return () => clearInterval(interval);
+      }, [endTime]);
   return (
     <section className="flex flex-col items-center gap-9 px-6 py-16 md:px-[120px] md:py-[100px] relative w-full">
       <div className="flex items-center md:flex-row flex-col justify-center gap-3.5 relative z-[2]">
@@ -103,24 +160,24 @@ export const FeaturesSection = () => {
           </div>
           <div className="flex items-center gap-1">
             <span className="[font-family:'Satoshi-Bold',Helvetica] font-bold text-white md:text-2xl text-xl tracking-[-0.96px] leading-[normal]">
-              24
+            {timeLeft[0].value}
             </span>
             <span className="[font-family:'Satoshi-Bold',Helvetica] font-bold text-white md:text-2xl text-xl tracking-[-0.96px] leading-[normal]">
               :
             </span>
             <span className="[font-family:'Satoshi-Bold',Helvetica] font-bold text-white md:text-2xl text-xl tracking-[-0.96px] leading-[normal]">
-              24
+              {timeLeft[1].value}
             </span>
             <span className="[font-family:'Satoshi-Bold',Helvetica] font-bold text-white md:text-2xl text-xl tracking-[-0.96px] leading-[normal]">
               :
             </span>
             <span className="[font-family:'Satoshi-Bold',Helvetica] font-bold text-white md:text-2xl text-xl tracking-[-0.96px] leading-[normal]">
-              14
+            {timeLeft[2].value}
             </span>
           </div>
         </Card>
 
-        <Button className="inline-flex max-md:w-full h-14 items-center gap-4 px-6 py-2 bg-[#9f74ff] rounded-lg [font-family:'Satoshi-Medium',Helvetica] font-medium text-white md:text-2xl text-xl tracking-[-0.96px] leading-[normal]">
+        <Button className="inline-flex max-md:w-full h-14 items-center gap-4 px-6 py-2 bg-[#9f74ff] rounded-lg [font-family:'Satoshi-Medium',Helvetica] font-medium text-white md:text-2xl text-xl tracking-[-0.96px] leading-[normal]" onClick={() => scrollToSection(0)}>
           Buy Now
         </Button>
       </div>

@@ -66,7 +66,7 @@ export const TestimonialsSection = () => {
           <div className="absolute bottom-[-30px] left-0 w-full h-32 bg-white blur-lg z-10 pointer-events-none"></div>
         </div>
       </div>
-      <button className="inline-flex items-center gap-2 z-0">
+      <button className="inline-flex items-center gap-2 z-0" onClick={() => window.open("https://medium.com/@zoradigital")}>
         <span className="[font-family:'Satoshi-Bold',Helvetica] font-bold text-black text-2xl tracking-[-0.72px]">
           Read more
         </span>

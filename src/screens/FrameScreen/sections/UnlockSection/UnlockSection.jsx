@@ -35,7 +35,7 @@ export const UnlockSection = () => {
               {heroText}
             </p>
           </CardContent>
-          <button className="inline-flex items-center gap-2 z-0">
+          <button className="inline-flex items-center gap-2 z-0" onClick={()=>window.open("https://form.typeform.com/to/vYNzgCKl", "_blank")}>
             <span className="[font-family:'Satoshi-Bold',Helvetica] font-bold text-black text-2xl tracking-[-0.72px]">
               Whitelist
             </span>

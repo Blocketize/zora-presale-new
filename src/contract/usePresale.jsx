@@ -157,7 +157,6 @@ export default function usePresale() {
           );
           setBuyAmount(info.buyTokenAmount);
           setClaimedAmount(info.claimAmount);
-          console.log("claim",Number(info.buyTokenAmount))
         } catch (error) {
           setClaimableAmount(0);
           console.log(error);
@@ -455,7 +454,7 @@ export default function usePresale() {
         toast.success("Token purchase was successful.");
         return false;
       } catch (error) {
-        console.error(error);
+        toast.error(error.toString());
         return false;
       } finally {
         setTransactionPending(false);
@@ -527,7 +526,7 @@ export default function usePresale() {
         toast.success("Token purchase was successful.");
         return false;
       } catch (error) {
-        console.error(error);
+        toast.error(error.toString());
         return false;
       } finally {
         setTransactionPending(false);
@@ -599,7 +598,7 @@ export default function usePresale() {
         toast.success("Token purchase was successful.");
         return false;
       } catch (error) {
-        console.error(error);
+        toast.error(error.toString());
         return false;
       } finally {
         setTransactionPending(false);

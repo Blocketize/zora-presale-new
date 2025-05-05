@@ -38,11 +38,11 @@ export const IntroductionSection = () => {
               </h2>
 
               <div className="flex flex-col items-start gap-3">
-                <Button className="w-[305px] p-2 bg-[#9f74ff] rounded-lg hover:bg-[#8a63e0] text-white font-medium text-xl tracking-[-0.64px] [font-family:'Satoshi-Medium',Helvetica]">
+                <Button className="w-[305px] p-2 bg-[#9f74ff] rounded-lg hover:bg-[#8a63e0] text-white font-medium text-xl tracking-[-0.64px] [font-family:'Satoshi-Medium',Helvetica]" onClick={() => window.open("https://www.youtube.com/watch?v=RKmLNONaQlg", "_blank")}>
                   Buy on Mobile
                 </Button>
 
-                <Button className="w-[305px] p-2 bg-[#9f74ff] rounded-lg hover:bg-[#8a63e0] text-white font-medium text-xl tracking-[-0.64px] [font-family:'Satoshi-Medium',Helvetica]">
+                <Button className="w-[305px] p-2 bg-[#9f74ff] rounded-lg hover:bg-[#8a63e0] text-white font-medium text-xl tracking-[-0.64px] [font-family:'Satoshi-Medium',Helvetica]"  onClick={() => window.open("https://www.youtube.com/watch?v=6CtL6aL7uIE", "_blank")}>
                   Buy on PC
                 </Button>
               </div>

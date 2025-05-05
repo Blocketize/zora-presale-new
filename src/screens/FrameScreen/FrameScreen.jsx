@@ -35,10 +35,18 @@ export const FrameScreen = () => {
   const section5Ref = useRef(null);
   const section6Ref = useRef(null);
   const socialIcons = [
-    { src: "frame-2.svg", alt: "Frame" },
-    { src: "frame-61.svg", alt: "Frame" },
-    { src: "frame-62.svg", alt: "Frame" },
-    { src: "frame-63.svg", alt: "Frame" },
+    {
+      src: "frame-2.svg",
+      alt: "Frame",
+      link: "https://www.tiktok.com/@zoraaisol",
+    },
+    { src: "frame-61.svg", alt: "Frame", link: "https://t.me/zoradigitalsol" },
+    { src: "frame-62.svg", alt: "Frame", link: "https://x.com/Zoradigital" },
+    {
+      src: "frame-63.svg",
+      alt: "Frame",
+      link: "https://www.instagram.com/zoraaisol/",
+    },
   ];
   const scrollToSection = (section) => {
     const sectionRefs = {
@@ -62,7 +70,7 @@ export const FrameScreen = () => {
   ];
 
   return (
-    <div className="flex justify-center relative w-full scrollbars-hidden">
+    <div className="flex justify-center bg-white relative w-full scrollbars-hidden">
       <div className="flex flex-col items-start md:max-w-[1440px] w-full">
         <div className="relative w-full flex max-md:border-b-2 max-md:border-black/25 items-center justify-around px-[20px] md:px-[120px] md:py-6 py-3">
           <div className="flex items-center justify-between w-full">
@@ -78,7 +86,7 @@ export const FrameScreen = () => {
                   <NavigationMenuItem key={index}>
                     <NavigationMenuLink
                       className="[font-family:'Satoshi-Regular',Helvetica] font-normal text-black text-2xl tracking-[-0.72px] cursor-pointer"
-                      onClick={() => scrollToSection(index)}
+                      onClick={index ===2?() => window.open("/zora_whitepaper.pdf", "_blank"):() => scrollToSection(index)}
                     >
                       {item}
                     </NavigationMenuLink>
@@ -88,7 +96,7 @@ export const FrameScreen = () => {
             </NavigationMenu>
             {hamburgerStatus ? (
               <img
-                className="cursor-pointer max-sm:block hidden"
+                className="cursor-pointer max-sm:block hidden "
                 onClick={handleMobileHamburger}
                 alt="hamburger"
                 src="hamburger_1.png"
@@ -106,13 +114,13 @@ export const FrameScreen = () => {
             </div>
           </div>
           {hamburgerStatus && (
-            <div className="bg-white/90 w-full p-5 absolute h-[600px] bottom-[-600px] border-y-2 border-black/25 z-10 flex flex-col gap-5">
+            <div className="bg-white/90 w-full p-5 absolute h-[600px] bottom-[-600px] border-y-2 border-black/25 z-30 flex flex-col gap-5">
               {navItems.map((item, index) => (
                 <p
                   key={index}
                   className="[font-family:'Satoshi-Regular',Helvetica] font-normal text-black text-2xl tracking-[-0.72px] cursor-pointer"
                   onClick={() => {
-                    scrollToSection(index);
+                    index ===2?window.open("/zora_whitepaper.pdf", "_blank"):scrollToSection(index)
                     handleMobileHamburger();
                   }}
                 >
@@ -125,9 +133,10 @@ export const FrameScreen = () => {
                   {socialIcons.map((icon, index) => (
                     <img
                       key={index}
-                      className="md:w-20 md:h-20 w-10 h-10"
+                      className="md:w-20 md:h-20 w-10 h-10 cursor-pointer"
+                      onClick={() => window.open(icon.link, "_blank")}
                       alt={icon.alt}
-                      src={icon.src}
+                      src={icon.src} 
                     />
                   ))}
                 </div>
@@ -142,7 +151,7 @@ export const FrameScreen = () => {
         <div ref={section2Ref} className="w-full">
           <MainContentSection />
         </div>
-        <UnlockSection/>
+        <UnlockSection />
         <HeroSection />
         <div ref={section3Ref} className="w-full">
           <NavigationSection />
@@ -150,7 +159,7 @@ export const FrameScreen = () => {
         <div ref={section4Ref} className="w-full">
           <IntroductionSection />
         </div>
-        <FeaturesSection />
+        <FeaturesSection scrollToSection={scrollToSection} />
         <TestimonialsSection />
         <div ref={section5Ref} className="w-full">
           <GallerySection />
@@ -159,7 +168,7 @@ export const FrameScreen = () => {
         <div ref={section6Ref} className="w-full">
           <ContactSection />
         </div>
-        <FooterSection />
+        <FooterSection scrollToSection={scrollToSection} />
       </div>
       <img
         className="absolute w-full md:h-[1793px] h-[1300px] bottom-0 left-0 z-[1] object-cover"

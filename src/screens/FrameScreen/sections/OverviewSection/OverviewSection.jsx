@@ -32,7 +32,8 @@ export const OverviewSection = () => {
     withdrawUsdt,
     withdrawUsdc,
     depositToken,
-    claimToken
+    claimToken,
+    claimableAmount
   } = usePresale();
   const [timeLeft, setTimeLeft] = useState([
     { value: "00", label: "days" },
@@ -137,24 +138,24 @@ export const OverviewSection = () => {
       <div className="flex flex-col items-start justify-center gap-6 relative">
         <div className="flex flex-col md:items-start gap-2 relative w-full">
           <img
-            className="relative md:w-[471px] md:h-[170.75px]"
+            className="relative z-20 md:w-[471px] md:h-[170.75px]"
             alt="Zora"
             src="zora.svg"
           />
 
-          <h1 className="relative w-full md:w-[455.46px] font-normal text-black md:text-4xl text-3xl md:text-start text-center tracking-[-1.44px] leading-normal [font-family:'Satoshi-Regular',Helvetica]">
+          <h1 className="relative z-20 w-full md:w-[455.46px] font-normal text-black md:text-4xl text-3xl md:text-start text-center tracking-[-1.44px] leading-normal [font-family:'Satoshi-Regular',Helvetica]">
             The future of digital humans
           </h1>
         </div>
 
-        <p className="relative max-sm:mb-[40px] md:w-[571px] w-full text-start font-normal text-black text-lg tracking-[-0.54px] leading-normal [font-family:'Century_Gothic-Regular',Helvetica]">
+        <p className="relative z-20 max-sm:mb-[40px] md:w-[571px] w-full text-start font-normal text-black text-lg tracking-[-0.54px] leading-normal [font-family:'Century_Gothic-Regular',Helvetica]">
           Create, customize, and evolve your own digital character. <br />
           AI is set to redefine human potential. Join the revolution with Zora!
         </p>
-        <div className="w-full absolute flex justify-center sm:right-[-350px] sm:top-[-100px] top-[-50px]">
+        <div className="w-full absolute z-10 flex justify-center sm:right-[-350px] sm:top-[-100px] top-[-50px]">
           <img
             src="zora.png"
-            className="max-sm:w-[250px] max-sm:opacity-20 -z-10 "
+            className="max-sm:w-[250px] max-sm:opacity-30 -z-10 "
           />
         </div>
       </div>
@@ -217,10 +218,9 @@ export const OverviewSection = () => {
                 Tokens Sold (USD):
               </span>
               <span className="w-fit mt-[-1.00px] font-medium text-black text-base tracking-[-0.64px] leading-normal [font-family:'Satoshi-Medium',Helvetica]">
-                {totalAmount.toFixed(2)}/1,000,000
+                {totalAmount.toFixed(2)}/3,200,000
               </span>
             </div>
-
             <div className="flex flex-col items-start gap-2.5 p-0.5 w-full rounded-[5px] border border-solid border-[#0000001a]">
               <Progress
                 className={`h-[15.27px] rounded [background:linear-gradient(90deg,rgb(0,0,0)_0%,rgb(102,102,102)_100%)]`}
@@ -280,7 +280,11 @@ export const OverviewSection = () => {
                   />
                 </div>
               )}
-
+              <div className="flex items-start gap-2">
+                <span className="w-fit mt-[-1.00px] font-medium text-black text-base tracking-[-0.64px] leading-normal [font-family:'Satoshi-Medium',Helvetica]">
+                  You purchased {claimableAmount.toFixed(2)} $ZORA
+                </span>
+              </div>
               {publicKey.toBase58() === PRESALE_AUTHORITY ? (
                 <div className="flex w-full flex-col gap-2">
                   <div className="flex items-center justify-center gap-2 w-full">
@@ -348,15 +352,15 @@ export const OverviewSection = () => {
                     </Button>
                   </div>
                   <Button
-                      className="border border-[2px] border-white w-full justify-around gap-4 p-2 bg-[#9f74ff] rounded-lg text-white hover:bg-[#8a63e0]"
-                      onClick={async () => {
-                        await increaseDate();
-                      }}
-                    >
-                      <span className="w-fit mt-[-1.00px] font-medium text-white text-base tracking-[-0.64px] leading-normal [font-family:'Satoshi-Medium',Helvetica]">
-                        Increase Date
-                      </span>
-                    </Button>
+                    className="border border-[2px] border-white w-full justify-around gap-4 p-2 bg-[#9f74ff] rounded-lg text-white hover:bg-[#8a63e0]"
+                    onClick={async () => {
+                      await increaseDate();
+                    }}
+                  >
+                    <span className="w-fit mt-[-1.00px] font-medium text-white text-base tracking-[-0.64px] leading-normal [font-family:'Satoshi-Medium',Helvetica]">
+                      Increase Date
+                    </span>
+                  </Button>
                   <div className="flex items-center justify-center gap-2 w-full">
                     <Separator className="flex-1 h-px bg-[#00000040]" />
                     <span className="w-fit mt-[-1.00px] font-medium text-[#00000040] text-sm tracking-[-0.56px] leading-normal [font-family:'Satoshi-Medium',Helvetica]">
@@ -387,28 +391,28 @@ export const OverviewSection = () => {
                     </Button>
                   </div>
                 </div>
+              ) : endTime * 1000 - new Date().getTime() < 0 ? (
+                <Button
+                  className="border border-[2px] border-white w-full justify-around gap-4 p-2 bg-[#9f74ff] rounded-lg text-white hover:bg-[#8a63e0]"
+                  onClick={async () => {
+                    await claimToken();
+                  }}
+                >
+                  <span className="w-fit mt-[-1.00px] font-medium text-white text-base tracking-[-0.64px] leading-normal [font-family:'Satoshi-Medium',Helvetica]">
+                    Claim Now
+                  </span>
+                </Button>
               ) : (
-                
-                (endTime * 1000 - new Date().getTime()) < 0?<Button
-                className="border border-[2px] border-white w-full justify-around gap-4 p-2 bg-[#9f74ff] rounded-lg text-white hover:bg-[#8a63e0]"
-                onClick={async () => {
-                  await claimToken();
-                }}
-              >
-                <span className="w-fit mt-[-1.00px] font-medium text-white text-base tracking-[-0.64px] leading-normal [font-family:'Satoshi-Medium',Helvetica]">
-                  Claim Now
-                </span>
-              </Button>:<Button
-                className="border border-[2px] border-white w-full justify-around gap-4 p-2 bg-[#9f74ff] rounded-lg text-white hover:bg-[#8a63e0]"
-                onClick={async () => {
-                  await increaseDate();
-                }}
-              >
-                <span className="w-fit mt-[-1.00px] font-medium text-white text-base tracking-[-0.64px] leading-normal [font-family:'Satoshi-Medium',Helvetica]">
-                  Buy Now
-                </span>
-              </Button>
-                
+                <Button
+                  className="border border-[2px] border-white w-full justify-around gap-4 p-2 bg-[#9f74ff] rounded-lg text-white hover:bg-[#8a63e0]"
+                  onClick={async () => {
+                    await handleBuy();
+                  }}
+                >
+                  <span className="w-fit mt-[-1.00px] font-medium text-white text-base tracking-[-0.64px] leading-normal [font-family:'Satoshi-Medium',Helvetica]">
+                    Buy Now
+                  </span>
+                </Button>
               )}
             </>
           ) : (

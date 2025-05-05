@@ -1,31 +1,56 @@
 import React from "react";
 
-export const FooterSection = () => {
+export const FooterSection = ({ scrollToSection }) => {
   const footerNavigation = [
     {
       title: "ABOUT",
       links: ["TOKENOMICS", "HOW TO BUY", "ROADMAP"],
+      pdfLinks: [
+        4,
+        3,
+        5,
+      ],
     },
     {
       title: "DOCS",
       links: ["WHITEPAPER", "DOCS", "BLOG"],
+      pdfLinks: [
+        "/zora_whitepaper.pdf",
+        "https://zora-digital.gitbook.io/docszora",
+        "https://medium.com/@zoradigital",
+      ],
     },
     {
       title: "TERMS",
-      links: ["TERMS OF USE", "PRIVACY POLICY", "AUDIT"],
+      links: ["TERMS OF USE", "PRIVACY POLICY", "COOKIES"],
+      pdfLinks: [
+        "/zora_TermsofUse.pdf",
+        "/zora_PrivacyPolicy.pdf",
+        "/Zora_Cookies.pdf",
+      ],
     },
-    { 
+    {
       title: "SOCIALS",
-      links: ["X", "TELEGRAM", "MEDIUM"],
+      links: ["X", "TELEGRAM", "TIKTOK"],
+      pdfLinks: [
+        "https://x.com/Zoradigital",
+        "https://t.me/zoradigitalsol",
+        "https://www.tiktok.com/@zoraaisol",
+      ],
     },
   ];
 
   const socialIcons = [
-    { src: "frame-2.svg", alt: "Frame" },
-    { src: "frame-61.svg", alt: "Frame" },
-    { src: "frame-62.svg", alt: "Frame" },
-    { src: "frame-63.svg", alt: "Frame" },
+    { src: "frame-2.svg", alt: "Frame", link:"https://www.tiktok.com/@zoraaisol" },
+    { src: "frame-61.svg", alt: "Frame", link:"https://t.me/zoradigitalsol" },
+    { src: "frame-62.svg", alt: "Frame", link:"https://x.com/Zoradigital" },
+    { src: "frame-63.svg", alt: "Frame", link:"https://www.instagram.com/zoraaisol/" },
   ];
+
+
+  const openPDF = (url) => {
+    window.open(url, "_blank");
+  };
 
   return (
     <footer className="relative w-full md:pt-52 pb-14 px-8 md:px-16 lg:px-64 flex flex-col items-center gap-[60px] bg-transparent overflow-hidden">
@@ -38,7 +63,8 @@ export const FooterSection = () => {
           {socialIcons.map((icon, index) => (
             <img
               key={index}
-              className="md:w-20 md:h-20 w-10 h-10"
+              className="md:w-20 md:h-20 w-10 h-10 cursor-pointer"
+              onClick={() => window.open(icon.link, "_blank")}
               alt={icon.alt}
               src={icon.src}
             />
@@ -52,15 +78,57 @@ export const FooterSection = () => {
                 {section.title}
               </h3>
               <div className="flex flex-col items-start">
-                {section.links.map((link, linkIndex) => (
-                  <a
+                {/* {section.links.map((link, linkIndex) => (
+                  <button
                     key={linkIndex}
-                    href="#"
+                    onClick={() => openPDF(section.pdfLinks[linkIndex])}
                     className="[font-family:'Satoshi-Regular',Helvetica] font-normal text-black md:text-white text-2xl tracking-[-0.72px] hover:underline"
                   >
                     {link}
-                  </a>
-                ))}
+                  </button>
+                ))} */}
+
+                {section.links.map((link, linkIndex) => {
+                  if (index === 3) {
+                    return (
+                      <a
+                        key={linkIndex}
+                        href={section.pdfLinks[linkIndex]}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="[font-family:'Satoshi-Regular',Helvetica] font-normal text-black md:text-white text-2xl tracking-[-0.72px] hover:underline"
+                      >
+                        {link}
+                      </a>
+                    );
+                  }
+
+                  if (index === 1 || index === 2) {
+                    return (
+                      <button
+                        key={linkIndex}
+                        onClick={() => openPDF(section.pdfLinks[linkIndex])}
+                        className="[font-family:'Satoshi-Regular',Helvetica] font-normal text-black md:text-white text-2xl tracking-[-0.72px] hover:underline"
+                      >
+                        {link}
+                      </button>
+                    );
+                  }
+                  if (index === 0) {
+                    return (
+                      <button
+                        key={linkIndex}
+                        onClick={() => scrollToSection(section.pdfLinks[linkIndex])}
+                        className="[font-family:'Satoshi-Regular',Helvetica] font-normal text-black md:text-white text-2xl tracking-[-0.72px] hover:underline"
+                      >
+                        {link}
+                      </button>
+                    );
+                  }
+
+                  // Default rendering (optional)
+                  return null;
+                })}
               </div>
             </div>
           ))}
@@ -84,7 +152,11 @@ export const FooterSection = () => {
       </div>
 
       <div className="flex items-center justify-between w-full z-[2]">
-        <img className="md:w-[120px] w-[90px]" alt="Zora" src="zora_white_logo.png" />
+        <img
+          className="md:w-[120px] w-[90px] cursor-pointer"
+          alt="Zora"
+          src="zora_white_logo.png"
+        />
         <div className="[font-family:'Satoshi-Regular',Helvetica] font-normal text-white text-sm text-center tracking-[-0.42px]">
           All Rights Reserved, 2025
         </div>

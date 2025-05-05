@@ -147,7 +147,7 @@ export const ContactSection = () => {
       </Card>
 
       <img
-        className="absolute object-cover top-[20%] -z-10 opacity-30 left-[-80%] rotate-[-30deg]"
+        className="absolute object-cover top-[20%] z-10 opacity-30 left-[-80%] rotate-[-30deg]"
         alt="Background fluid design"
         src="img-fluid2-1-1.png"
       />

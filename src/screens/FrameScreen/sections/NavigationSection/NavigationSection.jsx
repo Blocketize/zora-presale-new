@@ -37,7 +37,7 @@ export const NavigationSection = () => {
           Create, Customize, and Evolve
         </h2>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 cursor-pointer" onClick={() => window.open("https://zora-digital.gitbook.io/docszora")}>
           <span className="[font-family:'Satoshi-Bold',Helvetica] font-bold text-2xl tracking-[-0.72px]">
             Docs
           </span>
