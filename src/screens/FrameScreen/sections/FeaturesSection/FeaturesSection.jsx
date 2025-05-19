@@ -13,21 +13,21 @@ export const FeaturesSection = ({scrollToSection}) => {
   const featureOptions = [
     {
       id: "virtual-assistant",
-      title: "Virtual Assistant",
+      title: "Education",
       description:
-        "AI will play a pivotal role in shaping our future, and Zora is set to be at the forefront.",
+        "Zora avatars study various topics and provide personalized lessons to suit your learning style.",
     },
     {
       id: "content-creator",
       title: "Content Creator",
       description:
-        "AI will play a pivotal role in shaping our future, and Zora is set to be at the forefront.",
+        "Avatars create unique content like videos, posts, or stories, acting as influencers you can monetize through social platforms or brand deals.",
     },
     {
       id: "education",
-      title: "Education",
+      title: "Virtual Assistant",
       description:
-        "AI will play a pivotal role in shaping our future, and Zora is set to be at the forefront.",
+        "Your avatar manages daily tasks, organizes schedules, and engages in conversations to support you.",
     },
   ];
     const {
@@ -100,7 +100,7 @@ export const FeaturesSection = ({scrollToSection}) => {
       </div>
 
       <div className="flex flex-col md:flex-row items-center justify-center gap-2.5 relative w-full z-[1]">
-        <video
+        {/* <video
           className="relative w-full md:w-[645.33px] h-auto md:h-[757.3px] object-cover hidden max-sm:block"
           autoPlay
           loop
@@ -108,8 +108,8 @@ export const FeaturesSection = ({scrollToSection}) => {
           playsInline
         >
           <source src="babygirl.mp4" type="video/mp4" />
-        </video>
-        <img className="relative w-full md:w-[645.33px] h-auto md:h-[757.3px] object-cover block max-sm:hidden" src="babygirl-1.png"/>
+        </video> */}
+        <img className="relative w-full md:w-[645.33px] h-auto md:h-[757.3px] object-cover block" src="babygirl-1.png"/>
         <div className="flex flex-col items-start gap-3 md:absolute md:top-[235px] md:left-[870px] w-full md:w-auto">
           <Accordion type="single" collapsible className="w-full md:w-[330px]">
             {featureOptions.map((option, index) => (

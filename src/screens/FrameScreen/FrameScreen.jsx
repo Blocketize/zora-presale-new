@@ -38,7 +38,7 @@ export const FrameScreen = () => {
     {
       src: "frame-2.svg",
       alt: "Frame",
-      link: "https://www.tiktok.com/@zoraaisol",
+      link: "https://www.tiktok.com/@zoradigital?_t=ZS-8wA5Da0gPe4&_r=1",
     },
     { src: "frame-61.svg", alt: "Frame", link: "https://t.me/zoradigitalsol" },
     { src: "frame-62.svg", alt: "Frame", link: "https://x.com/Zoradigital" },

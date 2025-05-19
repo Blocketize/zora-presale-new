@@ -3,27 +3,119 @@ import { Card, CardContent } from "../../../../components/ui/card";
 import { Separator } from "../../../../components/ui/separator";
 
 export const ContactSection = () => {
+  // const phases = [
+  //   {
+  //     name: "Phase 1: Down of a New Era",
+  //     items: [
+  //       {
+  //         title: "Development",
+  //         description: "Launch of Zora's Alpha version",
+  //       },
+  //       {
+  //         title: "Presale",
+  //         description: "Star of the presale and fundraising campaing",
+  //       },
+  //       {
+  //         title: "Whitelist",
+  //         description:
+  //           "Activation of the whitelist, allowing selected users to test our platform",
+  //       },
+  //       {
+  //         title: "Strategic Partnerships",
+  //         description:
+  //           "At this stage, we will forge key alliances with iIndustry leaders. We'll partner with the best",
+  //       },
+  //     ],
+  //   },
+  //   {
+  //     name: "Phase 2: Market Launch",
+  //     items: [
+  //       {
+  //         title: "Distribution",
+  //         description: "Distribution of presale tokens.",
+  //       },
+  //       {
+  //         title: "Launch",
+  //         description: "Official token launch.",
+  //       },
+  //       {
+  //         title: "Marketing campaign",
+  //         description: "Aggressive marketing strategy through influencers.",
+  //       },
+  //       {
+  //         title: "Exchanges",
+  //         description: "Listing on Tier 1 and Tier 2 exchanges.",
+  //       },
+  //     ],
+  //   },
+  //   {
+  //     name: "Phase 3: Public Launch",
+  //     items: [
+  //       {
+  //         title: "Launch",
+  //         description: "Official release of the Dapp to the general public.",
+  //       },
+  //       {
+  //         title: "Creation and Customization",
+  //         description:
+  //           "Creation and customization features enabled with the Dapp launch.",
+  //       },
+  //       {
+  //         title: "Whitelist",
+  //         description:
+  //           "Activation of the whitelist, allowing selected users to test our platform",
+  //       },
+  //       {
+  //         title: "Strategic Partnerships",
+  //         description:
+  //           "At this stage, we will forge key alliances with iIndustry leaders. We'll partner with the best",
+  //       },
+  //     ],
+  //   },
+  //   {
+  //     name: "Phase 4: Expansion",
+  //     items: [
+  //       {
+  //         title: "Development",
+  //         description: "Launch of Zora's Alpha version",
+  //       },
+  //       {
+  //         title: "Presale",
+  //         description: "Star of the presale and fundraising campaing",
+  //       },
+  //       {
+  //         title: "Whitelist",
+  //         description:
+  //           "Activation of the whitelist, allowing selected users to test our platform",
+  //       },
+  //       {
+  //         title: "Strategic Partnerships",
+  //         description:
+  //           "At this stage, we will forge key alliances with iIndustry leaders. We'll partner with the best",
+  //       },
+  //     ],
+  //   },
+  // ];
+
   const phases = [
     {
-      name: "Phase 1: Down of a New Era",
+      name: "Phase 1: Dawn of a New Era",
       items: [
         {
           title: "Development",
-          description: "Launch of Zora's Alpha version",
+          description: "Launch of Zora’s Alpha version.",
         },
         {
           title: "Presale",
-          description: "Star of the presale and fundraising campaing",
+          description: "Start of the presale and fundraising campaign.",
         },
         {
           title: "Whitelist",
-          description:
-            "Activation of the whitelist, allowing selected users to test our platform",
+          description: "Activation of the whitelist, allowing selected users to test our platform.",
         },
         {
           title: "Strategic Partnerships",
-          description:
-            "At this stage, we will forge key alliances with iIndustry leaders. We'll partner with the best",
+          description: "At this stage, we will forge key alliances with industry leaders. We’ll partner with the best.",
         },
       ],
     },
@@ -36,10 +128,10 @@ export const ContactSection = () => {
         },
         {
           title: "Launch",
-          description: "Official token launch.",
+          description: "Official token launch on Raydium.",
         },
         {
-          title: "Marketing campaign",
+          title: "Marketing Campaign",
           description: "Aggressive marketing strategy through influencers.",
         },
         {
@@ -52,23 +144,20 @@ export const ContactSection = () => {
       name: "Phase 3: Public Launch",
       items: [
         {
-          title: "Launch",
-          description: "Official release of the Dapp to the general public.",
+          title: "Dapp Launch",
+          description: "Official release of the DApp to the general public.",
         },
         {
           title: "Creation and Customization",
-          description:
-            "Creation and customization features enabled with the Dapp launch.",
+          description: "Creation and customization features enabled with the DApp launch.",
         },
         {
-          title: "Whitelist",
-          description:
-            "Activation of the whitelist, allowing selected users to test our platform",
+          title: "Evolution",
+          description: "App update with the digital human evolution feature activated.",
         },
         {
-          title: "Strategic Partnerships",
-          description:
-            "At this stage, we will forge key alliances with iIndustry leaders. We'll partner with the best",
+          title: "Marketplace",
+          description: "Marketplace fully operational and ready for users to start trading.",
         },
       ],
     },
@@ -76,27 +165,25 @@ export const ContactSection = () => {
       name: "Phase 4: Expansion",
       items: [
         {
-          title: "Development",
-          description: "Launch of Zora's Alpha version",
+          title: "Advanced Learning",
+          description: "Begin training your AI avatar with unique traits, such as thoughts or skills.",
         },
         {
-          title: "Presale",
-          description: "Star of the presale and fundraising campaing",
+          title: "Chatbot",
+          description: "Train your Digital character to enable conversations with other users.",
         },
         {
-          title: "Whitelist",
-          description:
-            "Activation of the whitelist, allowing selected users to test our platform",
+          title: "API Integration",
+          description: "Integrate your creation into other Web3 applications using our API.",
         },
         {
-          title: "Strategic Partnerships",
-          description:
-            "At this stage, we will forge key alliances with iIndustry leaders. We'll partner with the best",
+          title: "Community Governance",
+          description: "Enable community-driven governance features, allowing users to propose and vote on platform upgrades and future developments.",
         },
       ],
     },
   ];
-
+  
   return (
     <section className="flex flex-col items-center gap-9 px-6 md:px-[120px] py-[100px] relative w-full">
       <h2 className="[font-family:'Satoshi-Regular',Helvetica] font-normal text-black text-5xl tracking-[-1.44px]">
